@@ -11,6 +11,7 @@ enum Operation{
   
 }
 class Transaction {
+  String nameBranch;
   Status status;
   Operation operation;
   double amount;
@@ -20,6 +21,7 @@ class Transaction {
   String accountId;
 
   Transaction({
+    required this.nameBranch,
     required this.status,
     required this.operation,
     required this.amount,
@@ -31,6 +33,6 @@ class Transaction {
 
   @override
   String toString() {
-    return 'Transaction(status: $status, operation: $operation, amount: $amount, date: $date, accountId: $accountId, balanceAfter: $balanceAfter, balancebefore: $balancebefore)';
+    return 'Transaction(nameBranch: $nameBranch ,status: $status, operation: $operation, amount: $amount, date: $date, accountId: $accountId, balanceAfter: $balanceAfter, balancebefore: $balancebefore)';
   }
 }
