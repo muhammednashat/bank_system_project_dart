@@ -25,7 +25,7 @@ abstract class Account with ValidationAmount {
     required this.accountType,
   });
 
-  void deposit(double amount) {
+  Future<void> deposit(double amount)  async {
     Status status = Status.success;
     try {
       isAmountValid(amount);
@@ -38,7 +38,7 @@ abstract class Account with ValidationAmount {
     }
   }
 
-  void withdraw(double amount) {
+  Future<void> withdraw(double amount)  async {
     Status status = Status.success;
     try {
       isAmountValid(amount);

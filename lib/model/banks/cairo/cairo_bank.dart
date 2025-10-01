@@ -11,6 +11,10 @@ List<Account> accounts= [];
     accounts.add(ac);
   
   }
+  
+  @override
+  void transfer(String from, String to, double amount) {
+  }
 
 
 }

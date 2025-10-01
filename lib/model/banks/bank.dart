@@ -8,7 +8,7 @@ abstract class Bank {
  
  void createNewAccount(Account account);
 
-
+ void transfer(String fromId, String toId, double amount); 
 
 
 
