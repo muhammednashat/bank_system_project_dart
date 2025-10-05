@@ -41,9 +41,9 @@ abstract class Account with ValidationAmount {
   Future<void> withdraw(double amount)  async {
     Status status = Status.success;
     try {
-      isAmountValid(amount);
+    
       if (amount > balance) {
-        print("Insufficent -----------");
+      
         throw MyException("Insufficient balance");
       }
     

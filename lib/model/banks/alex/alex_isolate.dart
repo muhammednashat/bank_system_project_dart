@@ -19,30 +19,50 @@ void alexBranch(SendPort mainSendPort) {
     final cmd = message["command"];
     final data = message["data"];
 
-    if (senderBranch == Branches.main.name && cmd == Commands.create.name) {
-      final account = Account.formJson((data as Map<String, dynamic>));
-      _alexBank.createNewAccount(account);
-    } else if (senderBranch == Branches.main.name &&
-        cmd == Commands.accounts.name) {
-      mainSendPort.send(
-        map(
-          _currentBranch,
-          Commands.accounts.name,
-          jsonList(_alexBank.accounts),
-        ),
-      );
-    } else if (senderBranch == Branches.main.name &&
-        cmd == Commands.transfer.name) {
-      print(message);
-      final map = data as Map<String, dynamic>;
-      final status = await _alexBank.transfer(map["from"], map["to"], map["amount"]);
-       print("done");
+     if(senderBranch == Branches.main.name){
+      despatchMainCommands(cmd, data, mainSendPort);
+        
     } else {
       print("$_currentBranch Unknown commond:$cmd");
     }
   });
 }
-
-List<Map<String, dynamic>> jsonList(List<Account> accounts) {
-  return accounts.map((account) => account.toJson()).toList();
+void despatchMainCommands(cmd, data , SendPort mainSendPort) async{
+  if ( cmd == Commands.create.name) {
+      final accounts = data as  List<Map<String, dynamic>>;
+       for (var account in accounts) {
+         _alexBank.createNewAccount(Account.formJson(account));
+       }
+      mainSendPort.send(
+        map(
+          _currentBranch,
+          Commands.accounts.name,
+          jsonList(_alexAccounts),
+        ),
+      );
+    } else if (cmd == Commands.transfer.name) {
+   
+      final map = data as Map<String, dynamic>;
+      try {
+        final status = await _alexBank.transfer(
+          map["from"],
+          map["to"],
+          map["amount"],
+        );
+        print("done");
+      } catch (e) {
+        print(e);
+      }
+    } else if (cmd == Commands.withdraw.name) {
+      final fromId = data["fromId"];
+      final amount = data["amount"];
+      final from = _alexAccounts.firstWhere((a){
+      return a.id == fromId;
+      });
+      await from.withdraw(amount);
+    mainSendPort.send(map(_currentBranch, Commands.withdraw_status, "done"));
+       
+}else{
+  print("No thing to exceute");
+}
 }

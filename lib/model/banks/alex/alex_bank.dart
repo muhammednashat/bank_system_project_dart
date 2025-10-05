@@ -3,7 +3,7 @@ import 'package:bank_system/model/banks/bank.dart';
 import 'package:bank_system/model/transaction.dart';
 import 'package:bank_system/util/custom_exception.dart';
 
-class AlexBank implements Bank {
+class AlexBank extends Bank {
   List<Account> accounts = [];
 
   @override
@@ -17,19 +17,24 @@ class AlexBank implements Bank {
 
   @override
   Future<void> transfer(String fromId, String toId, double amount) async {
-    final from  = accounts.firstWhere((a)=> a.id == fromId);  
-    final to = accounts.firstWhere((a)=> a.id == toId);
+    final from = accounts.firstWhere((a) => a.id == fromId);
+    final to = accounts.firstWhere((a) => a.id == toId);
 
     if (from.nameBranch != to.nameBranch) {
       throw MyException("Cross-branch transfer not allowed");
     }
-
     try {
-      
+      isAmountValid(amount);
+      await from.withdraw(amount);
+
+      try {
+        to.incrementBalance(amount);
+      } catch (e) {
+        from.balance += amount;
+        rethrow;
+      }
     } catch (e) {
-      
+      rethrow;
     }
-      
- 
   }
 }
