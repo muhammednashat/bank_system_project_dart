@@ -37,15 +37,22 @@ void despatchMainCommands(cmd, data, SendPort mainSendPort) async {
       map(_currentBranch, Commands.accounts.name, jsonList(_alexAccounts)),
     );
   } else if (cmd == Commands.transfer.name) {
-    final map = data as Map<String, dynamic>;
+     data as Map<String, dynamic>;
     try {
       final status = await _alexBank.transfer(
-        map["from"],
-        map["to"],
-        map["amount"],
+        data["from"],
+        data["to"],
+        data["amount"],
       );
+      mainSendPort.send(map(_currentBranch, Commands.transfer.name, {
+        "status":true,
+        "msg":"Done"
+      }));
     } catch (e) {
-      print(e);
+       mainSendPort.send(map(_currentBranch, Commands.transfer.name, {
+        "status":false,
+        "msg": e
+      }));
     }
   }else if(cmd == Commands.deposit.name){
     final amount = data["amount"];
