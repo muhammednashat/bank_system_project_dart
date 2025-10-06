@@ -26,16 +26,8 @@ abstract class Account with ValidationAmount {
   });
 
   Future<void> deposit(double amount)  async {
-    Status status = Status.success;
-    try {
-      isAmountValid(amount);
       incrementBalance(amount);
-    } catch (e) {
-      print(e);
-      status = Status.faild;
-    } finally {
-      saveTranstion(transaction(Operation.deposit, status, amount));
-    }
+      saveTranstion(transaction(Operation.deposit, Status.success, amount));
   }
 
   Future<void> withdraw(double amount)  async {
