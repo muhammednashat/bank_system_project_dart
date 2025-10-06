@@ -1,33 +1,39 @@
-🏦 Banking Features List
+🏦 Async Bank System (Dart + Isolates)
 
+A simulation of a multi-branch bank system built in Dart, focusing on asynchronous programming and isolates.
 
+🚀 Features
 
-🔹 Core Features (must have)
+Open Account → Create accounts with unique IDs and starting balances.
 
-Open Account → create accounts with unique IDs and starting balance.
+Deposit Money → Add funds asynchronously.
 
-Deposit Money → add money to an account.
+Withdraw Money → Secure withdrawal with balance check.
 
-Withdraw Money → subtract money (with balance check).
+Transaction History → Track every operation.
 
-Transaction History → log each operation for tracking.
+Transfer Money → Safely move funds between accounts.
 
+Branch Simulation (Isolates) → Multiple branches run in parallel.
 
+Async Delays → Mimic real-world slow network/banking operations.
 
+Fraud Detection → Independent listener monitors suspicious activities.
 
+⚙️ Tech Focus
 
-🔹 Intermediate Features (nice to have)
+Async / Await
 
-Transfer Money → move funds between two accounts safely.
+Future & Stream APIs
 
-Interest / Fees → apply rules automatically at intervals.
+Dart Isolates
 
-Notifications → stream transaction updates in real time.
+Message Passing & Concurrency
 
-🔹 Advanced Features (challenging)
+🧠 Learning Goals
 
-Branch Simulation with Isolates → multiple branches running in parallel.
+Master Dart async concepts.
 
-Async Delays → simulate slow operations (like remote banking).
+Understand Isolate-based concurrency.
 
-Fraud Detection → monitor transactions with a separate listener.
+Build realistic async simulations.
